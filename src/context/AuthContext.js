@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     const response = await axios.get('/api/users/profile');
     setUser(response.data);
-  }, []);
+  }, [refreshUser]);
 
   // On mount: check for existing backend JWT and verify it
   useEffect(() => {
