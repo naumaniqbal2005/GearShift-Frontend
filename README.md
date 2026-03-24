@@ -88,13 +88,31 @@ REACT_APP_FRONTEND_URL=http://localhost:3000
 
 ## Connecting to the Backend
 
-The app proxies API requests to the backend automatically via the `proxy` field in `package.json`:
+The frontend makes requests to backend endpoints like `/api/auth/login` and `/api/users/profile`.
+
+You have two valid setups:
+
+1) **Use CRA proxy (recommended for local dev)**: leave `REACT_APP_API_BASE_URL` empty and rely on the `proxy` field in `package.json`:
 
 ```json
 "proxy": "http://localhost:5000"
 ```
 
-Make sure the backend server is running before starting the frontend.
+2) **Use an explicit base URL**: set `REACT_APP_API_BASE_URL=http://localhost:5000` (or your deployed backend URL). In this case, the `proxy` setting is not required.
+
+Make sure the backend server is running before using the app.
+
+---
+
+## Supabase OAuth Redirect URL (if using Google)
+
+If you use `supabase.auth.signInWithOAuth(...)`, configure your Supabase project’s redirect URL to match the frontend:
+
+- Local: `http://localhost:3000`
+
+The app includes an `OAuthCallback` screen that exchanges the Supabase session access token for a backend JWT via:
+
+- `POST /api/auth/supabase/exchange`
 
 ---
 
